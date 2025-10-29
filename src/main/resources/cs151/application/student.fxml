@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+
+<ScrollPane fx:controller="cs151.application.MainController"
+            prefWidth="600" prefHeight="400" xmlns:fx="http://javafx.com/fxml">
+    <content>
+
+        <VBox xmlns="http://javafx.com/javafx"
+              xmlns:fx="http://javafx.com/fxml"
+              spacing="12" alignment="CENTER"
+              prefWidth="600" prefHeight="1400" style="-fx-background-color: #C9E8C7">
+
+            <Label text="KnowledgeTrack: Student Profile Page" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+            <Label fx:id="space2" text="" style="-fx-font-size: 5px;"/>
+
+            <Label text="Enter Full Name:"/>
+            <TextField fx:id="nameField" promptText="Enter student name" maxWidth="260" style="-fx-border-color: #0C5007"/>
+            <Label fx:id="popUp3" text="" style="-fx-font-size: 5px;"/>
+
+            <Label text="Select Academic Status:"/>
+            <ComboBox fx:id="dropdown" prefWidth="150" style="-fx-border-color: #0C5007">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Freshman" />
+                        <String fx:value="Sophmore" />
+                        <String fx:value="Junior" />
+                        <String fx:value="Senior" />
+                        <String fx:value="Graduate" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <Label fx:id="popUp" text="" style="-fx-font-size: 5px;"/>
+
+            <Label text="Select Job Status:"/>
+            <RadioButton fx:id="toggleButton" text="Employed" />
+            <TextField fx:id="textField" promptText="Job details" maxWidth="300" style="-fx-border-color: #0C5007"/>
+            <RadioButton fx:id="toggleButton2" text="Unemployed" />
+            <Label fx:id="popU" text="" style="-fx-font-size: 5px;"/>
+
+            <Label text="Known Programming Languages:"/>
+            <ListView fx:id="languagesList"  layoutX="50.0" layoutY="50.0" maxHeight="150.0" maxWidth="200.0" style="-fx-border-color: #0C5007"/>
+            <Label fx:id="pop" text="" style="-fx-font-size: 5px;"/>
+
+            <Label text="Databases Known:"/>
+            <ListView fx:id="multiSelectListView" layoutX="50.0" layoutY="50.0" maxHeight="150.0" maxWidth="200.0" style="-fx-border-color: #0C5007">
+                <String fx:value="MySQL" />
+                <String fx:value="Postgres" />
+                <String fx:value="MongoDB" />
+            </ListView>
+            <Label fx:id="po" text="" style="-fx-font-size: 5px;"/>
+
+            <Label text="Preferred Professional Role:"/>
+            <ComboBox fx:id="dropDown" prefWidth="150" style="-fx-border-color: #0C5007">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Front-end" />
+                        <String fx:value="Back-end" />
+                        <String fx:value="Full-stack" />
+                        <String fx:value="Data" />
+                        <String fx:value="Other" />
+                    </FXCollections>
+                </items>
+            </ComboBox>
+            <Label fx:id="p" text="" style="-fx-font-size: 5px;"/>
+
+            <Label text="Comments:"/>
+            <TextArea fx:id="commentField" promptText="Add faculty comments" maxWidth="260" maxHeight="260" wrapText="true" style="-fx-border-color: #0C5007"/>
+            <Label fx:id="space" text="" style="-fx-font-size: 5px;"/>
+
+            <CheckBox text="Whitelist Student" fx:id="whiteList" />
+            <CheckBox text="Blacklist Student" fx:id="blackList" />
+            <Label fx:id="space1" text="" style="-fx-font-size: 5px;"/>
+
+            <HBox spacing="10" alignment="CENTER">
+                <Button text="Save" onAction="#save" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+                <Button text="Edit" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+                <Button text="View Saved Profiles" onAction="#savedProfile" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+                <Button text="Back to Home" onAction="#goBackToHome" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+            </HBox>
+
+        </VBox>
+    </content>
+</ScrollPane>

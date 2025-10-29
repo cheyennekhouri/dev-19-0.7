@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="cs151.application.SearchProfileController"
+            prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #C9E8C7">
+
+
+    <VBox alignment="CENTER" spacing="12"
+          AnchorPane.topAnchor="20" AnchorPane.leftAnchor="20"
+          AnchorPane.rightAnchor="20" AnchorPane.bottomAnchor="20" style="-fx-background-color: #C9E8C7">
+
+                <Label text="Selected Student" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+
+                <GridPane hgap="10" vgap="8">
+                    <columnConstraints>
+                        <ColumnConstraints minWidth="120"/>
+                        <ColumnConstraints hgrow="ALWAYS"/>
+                    </columnConstraints>
+                    <children>
+                        <Label text="Name:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblName" text="—" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                        <Label text="Academic status:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblAcademicStatus" text="—" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                        <Label text="Current job:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <Label fx:id="lblCurrentJob" text="—" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                        <Label text="Job details:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextArea fx:id="taJobDetails" editable="false" wrapText="true" prefRowCount="3"
+                                  promptText="Role, company, duration, responsibilities"
+                                  GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    </children>
+                </GridPane>
+
+                <Label text="Achievements"/>
+                <ListView fx:id="lvAchievements" prefHeight="90"/>
+
+                <Label text="Skills"/>
+                <ListView fx:id="lvSkills" prefHeight="90"/>
+
+                <Label text="Career goals"/>
+                <ListView fx:id="lvCareerGoals" prefHeight="90"/>
+
+                <Label text="Programming languages"/>
+                <ListView fx:id="lvProgrammingLanguages" prefHeight="90"/>
+
+                <Label text="Faculty comments"/>
+                <TextArea fx:id="taComments" wrapText="true" prefRowCount="4"
+                          promptText="Add comments over time…"/>
+
+        <Button text="Back to Search" onAction="#searchProf" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+    </VBox>
+
+</AnchorPane>

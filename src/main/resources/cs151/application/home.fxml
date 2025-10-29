@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+    <VBox xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="cs151.application.MainController"
+          spacing="10" alignment="CENTER" prefWidth="340" prefHeight="260" style="-fx-background-color: #C9E8C7">
+
+        <Label fx:id="popUp" text="Welcome to KnowledgeTrack Homepage!" style="-fx-font-size: 15px;" />
+        <Label fx:id="popUp2" text="Navigate to..." />
+
+        <Button text="Define Programming Languages"
+                onAction="#programmingLang" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+
+        <Button text="Student Profile"
+            onAction="#studentProfile" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+
+        <Button text="Search"
+            onAction="#searchProf" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+
+        <Button text="Back to Front Page"
+            onAction="#onNavigateButtonClick" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+    </VBox>
+

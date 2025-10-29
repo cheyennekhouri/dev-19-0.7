@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="cs151.application.MainController"
+      spacing="10" alignment="CENTER" prefWidth="320" prefHeight="240" style="-fx-background-color: #C9E8C7">
+
+    <Label text="KnowledgeTrack Application" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+    <Label fx:id="popUp2" text="Welcome!" style="-fx-font-size: 15px;"/>
+    <Label fx:id="popUp3" text="" />
+
+    <Button text="Launch KnowledgeTrack"
+            onAction="#goBackToHome" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;" />
+</VBox>

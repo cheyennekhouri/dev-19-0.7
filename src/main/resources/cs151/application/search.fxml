@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="cs151.application.SearchProfileController"
+            prefWidth="1000" prefHeight="680"
+            style="-fx-background-color: white;">
+
+        <content>
+
+
+
+            <VBox spacing="12" style="-fx-background-color: white;">
+
+
+
+            <Label text="Search by name:"/>
+                <TextField fx:id="searchField" promptText="Enter student name…" HBox.hgrow="ALWAYS"/>
+                <Button text="Search" onAction="#onSearch"/>
+                <Button text="Clear"  onAction="#onClear"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="Back to Home"
+                        onAction="#goBackToHome"
+                        style="-fx-background-color: transparent; -fx-text-fill: #000000; -fx-text-base-color: #000000; -fx-border-color: #000000; -fx-border-width: 1;"/>
+
+
+
+                            <Label text="Results (select a student if multiple match):"/>
+                            <TableView fx:id="profilesTable" prefHeight="220">
+                                <columns>
+                                    <TableColumn fx:id="nameCol"   text="Name"              prefWidth="180"/>
+                                    <TableColumn fx:id="majorCol"  text="Major"             prefWidth="160"/>
+                                    <TableColumn fx:id="statusCol" text="Academic status"   prefWidth="160"/>
+                                    <TableColumn fx:id="empCol"    text="Employment"        prefWidth="120"/>
+                                    <TableColumn fx:id="roleCol"   text="Preferred role"    prefWidth="160"/>
+                                    <TableColumn fx:id="jobCol"    text="Job details"       prefWidth="260"/>
+                                </columns>
+                            </TableView>
+
+
+
+                   <Label text="If you can't find by name, filter by:" style="-fx-font-weight: bold;"/>
+                            <HBox spacing="8">
+                                    <Label text="Achievements:" minWidth="110"/>
+                                    <TextField fx:id="tfFilterAchievements" HBox.hgrow="ALWAYS"
+                                               promptText="e.g., Dean’s List, Hackathon"/>
+                            </HBox>
+                            <HBox spacing="8">
+                                    <Label text="Academic status:" minWidth="110"/>
+                                    <TextField fx:id="tfFilterStatus" HBox.hgrow="ALWAYS"
+                                               promptText="e.g., Good Standing / Probation"/>
+                            </HBox>
+                            <HBox spacing="8">
+
+                                    <Label text="Career goals:" minWidth="110"/>
+                                    <TextField fx:id="tfFilterCareerGoals" HBox.hgrow="ALWAYS"
+                                               promptText="e.g., Backend Engineer"/>
+
+                            </HBox>
+                            <HBox spacing="8" alignment="CENTER_RIGHT">
+                                <children>
+                                    <Button fx:id="btnApplyFilters" text="Apply Filters"/>
+                                    <Button fx:id="btnResetFilters" text="Reset"/>
+                                </children>
+                            </HBox>
+
+                <HBox spacing="12" alignment="CENTER_LEFT">
+                    <children>
+                        <CheckBox fx:id="cbWhitelist" text="Whitelisted"/>
+                        <CheckBox fx:id="cbBlacklist" text="Blacklisted"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnEditProfile" text="Edit" onAction="#editPage"/>
+                        <Button fx:id="btnDeleteProfile" text="Delete" onAction="#onDelete"/>
+                    </children>
+                </HBox>
+
+                <Label fx:id="lblDuplicateNameError"
+                       text="Error: A profile with this student name already exists."
+                       visible="false"
+                       style="-fx-text-fill: #c62828; -fx-font-weight: bold;"/>
+                </VBox>
+            </content>
+        </ScrollPane>
