@@ -16,7 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SearchProfileController {
+public class EditController {
 
     @FXML private TextField searchField;
     @FXML private TableView<StudentProfile> profilesTable;
@@ -34,15 +34,20 @@ public class SearchProfileController {
     private ObservableList<StudentProfile> allProfiles;
 
     @FXML
+    protected void editPage(ActionEvent event) {
+        swapScene(event, "/cs151/application/edit.fxml", 400, 300, "Edit Page");
+    }
+
+    @FXML
     public void initialize() {
-        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+       // nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         //majorCol.setCellValueFactory(new PropertyValueFactory<>("major"));
-        statusCol.setCellValueFactory(new PropertyValueFactory<>("academicStatus"));
-        roleCol.setCellValueFactory(new PropertyValueFactory<>("preferredRole"));
+      //  statusCol.setCellValueFactory(new PropertyValueFactory<>("academicStatus"));
+      //  roleCol.setCellValueFactory(new PropertyValueFactory<>("preferredRole"));
 
         allProfiles = DataStore.getFullName();
         allProfiles.sort(Comparator.comparing(StudentProfile::getName, String.CASE_INSENSITIVE_ORDER));
-        profilesTable.setItems(allProfiles);
+        //profilesTable.setItems(allProfiles);
 
         if (allProfiles.isEmpty()) {
             statusLabel.setText("No profiles found.");
@@ -67,7 +72,7 @@ public class SearchProfileController {
         }
         List<StudentProfile> filtered = allProfiles.stream()
                 .filter(p ->
-                        (p.getName() != null && p.getName().toLowerCase().contains(keyword)) ||
+                        //(p.getName() != null && p.getName().toLowerCase().contains(keyword)) ||
                                 (p.getMajor() != null && p.getMajor().toLowerCase().contains(keyword)) ||
                                 (p.getAcademicStatus() != null && p.getAcademicStatus().toLowerCase().contains(keyword)) ||
                                 (p.getPreferredRole() != null && p.getPreferredRole().toLowerCase().contains(keyword))
@@ -119,6 +124,12 @@ public class SearchProfileController {
         }
     }
 
+    //search page
+    @FXML
+    protected void searchProf(ActionEvent event) {
+        swapScene(event, "/cs151/application/search.fxml", 1000, 680, "Search Student Profiles");
+    }
+
     @FXML
     protected void goBackToHome(ActionEvent e) {
         try {
@@ -136,16 +147,7 @@ public class SearchProfileController {
         }
     }
 
-    @FXML
-    protected void editPage(ActionEvent event) {
-        swapScene(event, "/cs151/application/edit.fxml", 626, 450, "Edit Page");
-    }
 
-    //search page
-    @FXML
-    protected void searchProf(ActionEvent event) {
-        swapScene(event, "/cs151/application/search.fxml", 1000, 680, "Search Student Profiles");
-    }
 
 
     private boolean requiredFields() {

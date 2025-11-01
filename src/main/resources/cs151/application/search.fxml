@@ -7,77 +7,92 @@
 <ScrollPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="cs151.application.SearchProfileController"
-            prefWidth="1000" prefHeight="680"
-            style="-fx-background-color: white;">
+            prefWidth="1000" prefHeight="680">
 
         <content>
 
+            <VBox xmlns="http://javafx.com/javafx"
+                  xmlns:fx="http://javafx.com/fxml"
+                  spacing="12"  style="-fx-background-color: #C9E8C7">
+                <Label text="" style="-fx-font-size: 5px"/>
+
+                <Label text="Search Page" style="-fx-font-size: 18px; -fx-font-weight: bold;" alignment="CENTER"/>
+                <Label text="" style="-fx-font-size: 5px"/>
+
+                <HBox spacing="8">
+                <children>
+                    <Label text="Search by name:"/>
+                    <TextField fx:id="searchField" promptText="Enter student name…" HBox.hgrow="ALWAYS" style="-fx-border-color: #0C5007" maxWidth="260"/>
+                </children>
+                </HBox>
 
 
-            <VBox spacing="12" style="-fx-background-color: white;">
-
-
-
-            <Label text="Search by name:"/>
-                <TextField fx:id="searchField" promptText="Enter student name…" HBox.hgrow="ALWAYS"/>
-                <Button text="Search" onAction="#onSearch"/>
-                <Button text="Clear"  onAction="#onClear"/>
+                <HBox spacing="8">
+                <children>
+                    <Button text="Search" onAction="#onSearch" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+                    <Button text="Clear"  onAction="#onClear" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+                </children>
+                </HBox>
 
                 <Region HBox.hgrow="ALWAYS"/>
-                <Button text="Back to Home"
-                        onAction="#goBackToHome"
-                        style="-fx-background-color: transparent; -fx-text-fill: #000000; -fx-text-base-color: #000000; -fx-border-color: #000000; -fx-border-width: 1;"/>
 
-
-
-                            <Label text="Results (select a student if multiple match):"/>
-                            <TableView fx:id="profilesTable" prefHeight="220">
+                <Label text="Results (select a student if multiple match):"/>
+                            <TableView fx:id="profilesTable" prefHeight="220" >
                                 <columns>
-                                    <TableColumn fx:id="nameCol"   text="Name"              prefWidth="180"/>
-                                    <TableColumn fx:id="majorCol"  text="Major"             prefWidth="160"/>
-                                    <TableColumn fx:id="statusCol" text="Academic status"   prefWidth="160"/>
-                                    <TableColumn fx:id="empCol"    text="Employment"        prefWidth="120"/>
-                                    <TableColumn fx:id="roleCol"   text="Preferred role"    prefWidth="160"/>
-                                    <TableColumn fx:id="jobCol"    text="Job details"       prefWidth="260"/>
+                                    <TableColumn fx:id="nameCol"   text="Name"              prefWidth="205"/>
+                                    <TableColumn fx:id="statusCol" text="Academic status"   prefWidth="170"/>
+                                    <TableColumn fx:id="empCol"    text="Employment"        prefWidth="140"/>
+                                    <TableColumn fx:id="roleCol"   text="Preferred role"    prefWidth="180"/>
+                                    <TableColumn fx:id="jobCol"    text="Job details"       prefWidth="290"/>
                                 </columns>
                             </TableView>
 
-
+                <HBox spacing="8" >
+                    <children>
+                        <Button fx:id="btnEditProfile" text="Edit" onAction="#editPage" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+                        <Button fx:id="btnDeleteProfile" text="Delete" onAction="#onDelete" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+                    </children>
+                </HBox>
+                <Label text="" style="-fx-font-size: 5px"/>
 
                    <Label text="If you can't find by name, filter by:" style="-fx-font-weight: bold;"/>
-                            <HBox spacing="8">
+                <HBox spacing="8">
+                <children>
                                     <Label text="Achievements:" minWidth="110"/>
                                     <TextField fx:id="tfFilterAchievements" HBox.hgrow="ALWAYS"
-                                               promptText="e.g., Dean’s List, Hackathon"/>
-                            </HBox>
-                            <HBox spacing="8">
+                                               promptText="e.g., Dean’s List, Hackathon" style="-fx-border-color: #0C5007" maxWidth="260"/>
+                </children>
+                </HBox>
+
+                <HBox spacing="8">
+                <children>
                                     <Label text="Academic status:" minWidth="110"/>
                                     <TextField fx:id="tfFilterStatus" HBox.hgrow="ALWAYS"
-                                               promptText="e.g., Good Standing / Probation"/>
-                            </HBox>
-                            <HBox spacing="8">
+                                               promptText="e.g., Good Standing / Probation" style="-fx-border-color: #0C5007" maxWidth="260"/>
+                </children>
+                </HBox>
 
+                <HBox spacing="8" >
+                <children>
                                     <Label text="Career goals:" minWidth="110"/>
                                     <TextField fx:id="tfFilterCareerGoals" HBox.hgrow="ALWAYS"
-                                               promptText="e.g., Backend Engineer"/>
+                                               promptText="e.g., Backend Engineer" style="-fx-border-color: #0C5007" maxWidth="260"/>
+                </children>
+                </HBox>
 
-                            </HBox>
-                            <HBox spacing="8" alignment="CENTER_RIGHT">
+                            <HBox spacing="8" >
                                 <children>
-                                    <Button fx:id="btnApplyFilters" text="Apply Filters"/>
-                                    <Button fx:id="btnResetFilters" text="Reset"/>
+                                    <Button fx:id="btnApplyFilters" text="Apply Filters" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+                                    <Button fx:id="btnResetFilters" text="Reset" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
                                 </children>
                             </HBox>
 
-                <HBox spacing="12" alignment="CENTER_LEFT">
-                    <children>
-                        <CheckBox fx:id="cbWhitelist" text="Whitelisted"/>
-                        <CheckBox fx:id="cbBlacklist" text="Blacklisted"/>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <Button fx:id="btnEditProfile" text="Edit" onAction="#editPage"/>
-                        <Button fx:id="btnDeleteProfile" text="Delete" onAction="#onDelete"/>
-                    </children>
-                </HBox>
+                <Label text="" style="-fx-font-size: 5px"/>
+
+                <Button text="Back to Home" onAction="#goBackToHome" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+
+
+                <Region HBox.hgrow="ALWAYS"/>
 
                 <Label fx:id="lblDuplicateNameError"
                        text="Error: A profile with this student name already exists."

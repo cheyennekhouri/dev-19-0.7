@@ -1,5 +1,15 @@
 # Name of application: KnowledgeTrack
 
+# Version: 0.7
+
+# who did what:
+1. Sean Reece Calantoc: 
+2. Kanishka Yadav: 
+3. Hoang Khang Pham: 
+4. Cheyenne Khouri: Fixed and adjusted search page, created edit page, created Edit Controller
+
+# Any other instruction that users need to know:
+
 # Version: 0.6
 
 # who did what:
