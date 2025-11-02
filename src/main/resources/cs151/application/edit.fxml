@@ -32,15 +32,20 @@
                         <Label fx:id="lblName" text="—" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
                         <Label text="Academic status:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblAcademicStatus" text="—" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                        <TextField fx:id="tfAcademicStatus" promptText="e.g., Junior / Senior"
+                                   GridPane.rowIndex="1" GridPane.columnIndex="1" style="-fx-border-color: #0C5007"/>
 
-                        <Label text="Current job:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                        <Label fx:id="lblCurrentJob" text="—" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                        <Label text="Employed:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                        <CheckBox fx:id="cbEmployed" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
-                        <Label text="Job details:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                        <TextArea fx:id="taJobDetails" editable="false" wrapText="true" prefRowCount="3"
+                        <Label text="Preferred role:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                        <TextField fx:id="tfPreferredRole" promptText="e.g., Backend, Frontend, Data"
+                                   GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-border-color: #0C5007"/>
+
+                        <Label text="Job details:" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+                        <TextArea fx:id="taJobDetails" wrapText="true" prefRowCount="3"
                                   promptText="Role, company, duration, responsibilities"
-                                  GridPane.rowIndex="3" GridPane.columnIndex="1" style="-fx-border-color: #0C5007" />
+                                  GridPane.rowIndex="4" GridPane.columnIndex="1" style="-fx-border-color: #0C5007"/>
                     </children>
                 </GridPane>
 

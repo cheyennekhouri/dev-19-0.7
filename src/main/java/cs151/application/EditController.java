@@ -18,7 +18,10 @@ public class EditController {
     @FXML private Label lblAcademicStatus;
     @FXML private Label lblCurrentJob;
 
+    @FXML private TextField tfAcademicStatus;
+    @FXML private CheckBox cbEmployed;
     @FXML private TextArea taJobDetails;
+    @FXML private TextField tfPreferredRole;
 
     @FXML private ListView<String> lvAchievements;
     @FXML private ListView<String> lvSkills;
@@ -43,11 +46,13 @@ public class EditController {
     public void loadProfile(StudentProfile p) {
         this.current = p;
 
+
         lblName.setText(nvl(p.getName()));
-        lblAcademicStatus.setText(nvl(p.getAcademicStatus()));
-        lblCurrentJob.setText(p.isEmployed() ? "Employed" : "Not Employed");
+        tfAcademicStatus.setText(nvl(p.getAcademicStatus()));
+        cbEmployed.setSelected(p.isEmployed());
 
         taJobDetails.setText(nvl(p.getJobDetails()));
+        tfPreferredRole.setText(nvl(p.getPreferredRole()));
 
         List<String> langs = (p.getLanguages() == null) ? List.of() : p.getLanguages();
         lvProgrammingLanguages.setItems(FXCollections.observableArrayList(langs));
@@ -65,6 +70,11 @@ public class EditController {
             new Alert(Alert.AlertType.ERROR, "No profile loaded.").showAndWait();
             return;
         }
+
+        current.setAcademicStatus(tfAcademicStatus.getText() == null ? "" : tfAcademicStatus.getText().trim());
+        current.setEmployeed(cbEmployed.isSelected());
+        current.setJobDetails(taJobDetails.getText() == null ? "" : taJobDetails.getText().trim());
+        current.setPreferredRole(tfPreferredRole.getText() == null ? "" : tfPreferredRole.getText().trim());
 
         current.setComments(taComments.getText() == null ? "" : taComments.getText().trim());
         current.setWhiteList(cbWhitelist.isSelected());
