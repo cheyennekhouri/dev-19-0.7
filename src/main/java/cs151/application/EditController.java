@@ -11,23 +11,16 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class EditController {
 
     @FXML private Label lblName;
-    @FXML private Label lblAcademicStatus;
-    @FXML private Label lblCurrentJob;
-
-    @FXML private TextField tfAcademicStatus;
-    @FXML private CheckBox cbEmployed;
-    @FXML private TextArea taJobDetails;
-    @FXML private TextField tfPreferredRole;
-
-    @FXML private ListView<String> lvAchievements;
-    @FXML private ListView<String> lvSkills;
-    @FXML private ListView<String> lvCareerGoals;
+    @FXML private ComboBox<String> cbAcademicStatus;
+    @FXML private RadioButton rbEmployed;
+    @FXML private TextField tfJobDetails;
+    @FXML private ComboBox<String> cbPreferredRole;
     @FXML private ListView<String> lvProgrammingLanguages;
-
     @FXML private TextArea taComments;
     @FXML private CheckBox cbWhitelist;
     @FXML private CheckBox cbBlacklist;
@@ -36,26 +29,62 @@ public class EditController {
 
     @FXML
     public void initialize() {
-        if (lvAchievements != null)     lvAchievements.setItems(FXCollections.observableArrayList());
-        if (lvSkills != null)           lvSkills.setItems(FXCollections.observableArrayList());
-        if (lvCareerGoals != null)      lvCareerGoals.setItems(FXCollections.observableArrayList());
-        if (lvProgrammingLanguages != null)
-            lvProgrammingLanguages.setItems(FXCollections.observableArrayList());
+        // Populate Academic Status dropdown
+        if (cbAcademicStatus != null) {
+            cbAcademicStatus.setItems(FXCollections.observableArrayList(
+                    "Freshman", "Sophomore", "Junior", "Senior", "Graduate"
+            ));
+        }
+
+        // Populate Preferred Role dropdown
+        if (cbPreferredRole != null) {
+            cbPreferredRole.setItems(FXCollections.observableArrayList(
+                    "Front-End", "Back-End", "Full-Stack", "Data", "Other"
+            ));
+        }
+
+        // Populate Programming Languages from DataStore
+        if (lvProgrammingLanguages != null) {
+            List<String> langs = DataStore.getList().stream()
+                    .map(ProgrammingLanguages::getProgrammingLanguage)
+                    .collect(Collectors.toList());
+            lvProgrammingLanguages.setItems(FXCollections.observableArrayList(langs));
+            lvProgrammingLanguages.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        }
+
+        // Setup whitelist/blacklist mutual exclusivity
+        if (cbWhitelist != null && cbBlacklist != null) {
+            cbWhitelist.setOnAction(e -> {
+                if (cbWhitelist.isSelected()) cbBlacklist.setSelected(false);
+            });
+            cbBlacklist.setOnAction(e -> {
+                if (cbBlacklist.isSelected()) cbWhitelist.setSelected(false);
+            });
+        }
     }
 
     public void loadProfile(StudentProfile p) {
         this.current = p;
 
-
+        // Load read-only fields
         lblName.setText(nvl(p.getName()));
-        tfAcademicStatus.setText(nvl(p.getAcademicStatus()));
-        cbEmployed.setSelected(p.isEmployed());
 
-        taJobDetails.setText(nvl(p.getJobDetails()));
-        tfPreferredRole.setText(nvl(p.getPreferredRole()));
+        // Load editable fields
+        cbAcademicStatus.setValue(p.getAcademicStatus());
+        rbEmployed.setSelected(p.isEmployed());
+        tfJobDetails.setText(nvl(p.getJobDetails()));
+        cbPreferredRole.setValue(p.getPreferredRole());
 
-        List<String> langs = (p.getLanguages() == null) ? List.of() : p.getLanguages();
-        lvProgrammingLanguages.setItems(FXCollections.observableArrayList(langs));
+        // Select the student's programming languages
+        if (p.getLanguages() != null) {
+            lvProgrammingLanguages.getSelectionModel().clearSelection();
+            for (String lang : p.getLanguages()) {
+                int index = lvProgrammingLanguages.getItems().indexOf(lang);
+                if (index >= 0) {
+                    lvProgrammingLanguages.getSelectionModel().select(index);
+                }
+            }
+        }
 
         taComments.setText(nvl(p.getComments()));
         cbWhitelist.setSelected(p.isWhiteList());
@@ -71,10 +100,21 @@ public class EditController {
             return;
         }
 
-        current.setAcademicStatus(tfAcademicStatus.getText() == null ? "" : tfAcademicStatus.getText().trim());
-        current.setEmployeed(cbEmployed.isSelected());
-        current.setJobDetails(taJobDetails.getText() == null ? "" : taJobDetails.getText().trim());
-        current.setPreferredRole(tfPreferredRole.getText() == null ? "" : tfPreferredRole.getText().trim());
+        // Save all editable fields
+        if (cbAcademicStatus.getValue() != null)
+            current.setAcademicStatus(cbAcademicStatus.getValue());
+
+        current.setEmployeed(rbEmployed.isSelected());
+
+        if (tfJobDetails.getText() != null)
+            current.setJobDetails(tfJobDetails.getText().trim());
+
+        if (cbPreferredRole.getValue() != null)
+            current.setPreferredRole(cbPreferredRole.getValue());
+
+        // Save selected programming languages
+        List<String> selectedLangs = lvProgrammingLanguages.getSelectionModel().getSelectedItems();
+        current.setLanguages(selectedLangs);
 
         current.setComments(taComments.getText() == null ? "" : taComments.getText().trim());
         current.setWhiteList(cbWhitelist.isSelected());
@@ -103,5 +143,7 @@ public class EditController {
         }
     }
 
-    private static String nvl(String s) { return (s == null || s.isBlank()) ? "—" : s; }
+    private static String nvl(String s) {
+        return (s == null || s.isBlank()) ? "" : s;
+    }
 }
