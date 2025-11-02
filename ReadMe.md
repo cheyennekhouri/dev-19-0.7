@@ -3,9 +3,9 @@
 # Version: 0.7
 
 # who did what:
-1. Sean Reece Calantoc: 
-2. Kanishka Yadav: 
-3. Hoang Khang Pham: 
+1. Sean Reece Calantoc: Ensured edit page is funcitonal and saves
+2. Kanishka Yadav: Enhanced Edit Profile to make Academic Status, Job Details, and Preferred Role editable
+3. Hoang Khang Pham: Successfully fixed 5 profiles and Displayed values in Edit page
 4. Cheyenne Khouri: Fixed and adjusted search page, created edit page, created Edit Controller
 
 # Any other instruction that users need to know:

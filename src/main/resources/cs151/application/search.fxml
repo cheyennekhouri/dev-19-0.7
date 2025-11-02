@@ -49,7 +49,7 @@
 
                 <HBox spacing="8" >
                     <children>
-                        <Button fx:id="btnEditProfile" text="Edit" onAction="#editPage" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
+                        <Button fx:id="btnEditProfile" text="Edit" onAction="#onEditSelected" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
                         <Button fx:id="btnDeleteProfile" text="Delete" onAction="#onDelete" style="-fx-border-color: #0C5007; -fx-text-fill: #0C5007;"/>
                     </children>
                 </HBox>

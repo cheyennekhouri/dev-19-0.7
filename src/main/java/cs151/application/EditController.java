@@ -1,192 +1,93 @@
 package cs151.application;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class EditController {
 
-    @FXML private TextField searchField;
-    @FXML private TableView<StudentProfile> profilesTable;
-    @FXML private TableColumn<StudentProfile, String> nameCol;
-    @FXML private TableColumn<StudentProfile, String> majorCol;
-    @FXML private TableColumn<StudentProfile, String> statusCol;
-    @FXML private TableColumn<StudentProfile, String> roleCol;
-    @FXML private Label statusLabel;
+    @FXML private Label lblName;
+    @FXML private Label lblAcademicStatus;
+    @FXML private Label lblCurrentJob;
 
+    @FXML private TextField tfAcademicStatus;
+    @FXML private CheckBox cbEmployed;
+    @FXML private TextArea taJobDetails;
+    @FXML private TextField tfPreferredRole;
 
-    @FXML private ComboBox<String> dropdown, dropDown;
-    @FXML private RadioButton toggleButton;
-    @FXML private TextField textField;
+    @FXML private ListView<String> lvAchievements;
+    @FXML private ListView<String> lvSkills;
+    @FXML private ListView<String> lvCareerGoals;
+    @FXML private ListView<String> lvProgrammingLanguages;
 
-    private ObservableList<StudentProfile> allProfiles;
+    @FXML private TextArea taComments;
+    @FXML private CheckBox cbWhitelist;
+    @FXML private CheckBox cbBlacklist;
 
-    @FXML
-    protected void editPage(ActionEvent event) {
-        swapScene(event, "/cs151/application/edit.fxml", 400, 300, "Edit Page");
-    }
+    private StudentProfile current;
 
     @FXML
     public void initialize() {
-       // nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        //majorCol.setCellValueFactory(new PropertyValueFactory<>("major"));
-      //  statusCol.setCellValueFactory(new PropertyValueFactory<>("academicStatus"));
-      //  roleCol.setCellValueFactory(new PropertyValueFactory<>("preferredRole"));
-
-        allProfiles = DataStore.getFullName();
-        allProfiles.sort(Comparator.comparing(StudentProfile::getName, String.CASE_INSENSITIVE_ORDER));
-        //profilesTable.setItems(allProfiles);
-
-        if (allProfiles.isEmpty()) {
-            statusLabel.setText("No profiles found.");
-        }/* else {
-            statusLabel.setText(allProfiles.size() + " profiles loaded.");
-        }*/
+        if (lvAchievements != null)     lvAchievements.setItems(FXCollections.observableArrayList());
+        if (lvSkills != null)           lvSkills.setItems(FXCollections.observableArrayList());
+        if (lvCareerGoals != null)      lvCareerGoals.setItems(FXCollections.observableArrayList());
+        if (lvProgrammingLanguages != null)
+            lvProgrammingLanguages.setItems(FXCollections.observableArrayList());
     }
 
-    @FXML
-    protected void onSearch() {
-        String keyword;
-        if (searchField != null && searchField.getText() != null) {
-            keyword = searchField.getText().trim().toLowerCase();
-        } else {
-            keyword = "";
-        }
-
-        if (keyword.isEmpty()) {
-            profilesTable.setItems(allProfiles);
-            statusLabel.setText("Showing all profiles.");
-            return;
-        }
-        List<StudentProfile> filtered = allProfiles.stream()
-                .filter(p ->
-                        //(p.getName() != null && p.getName().toLowerCase().contains(keyword)) ||
-                                (p.getMajor() != null && p.getMajor().toLowerCase().contains(keyword)) ||
-                                (p.getAcademicStatus() != null && p.getAcademicStatus().toLowerCase().contains(keyword)) ||
-                                (p.getPreferredRole() != null && p.getPreferredRole().toLowerCase().contains(keyword))
-                ).collect(Collectors.toList());
-
-        profilesTable.setItems(FXCollections.observableArrayList(filtered));
-        if (filtered.isEmpty()) {
-            statusLabel.setText("No results found for \"" + keyword + "\".");
-        } else {
-            statusLabel.setText(filtered.size() + " result(s) found.");
-        }
-    }
-
-    @FXML
-    protected void onClear() {
-        searchField.clear();
-        profilesTable.setItems(allProfiles);
-        statusLabel.setText("Showing all profiles.");
-    }
-
-    @FXML
-    protected void onDelete() {
-        StudentProfile selected = profilesTable.getSelectionModel().getSelectedItem();
-
-        if (selected == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select a profile to delete.", ButtonType.OK);
-            alert.setTitle("No Selection");
-            alert.setHeaderText(null);
-            alert.showAndWait();
-            statusLabel.setText("No profile selected.");
-            return;
-        }
-
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete \"" +
-                selected.getName() + "\"?", ButtonType.YES, ButtonType.NO);
-        confirm.setTitle("Confirm Deletion");
-        confirm.setHeaderText(null);
-
-        if (confirm.showAndWait().orElse(ButtonType.NO) == ButtonType.YES) {
-            DataStore.deleteByName(selected.getName());
-            DataStore.loadProfiles(); // refresh from file
-            allProfiles = DataStore.getFullName();
-            allProfiles.sort(Comparator.comparing(StudentProfile::getName, String.CASE_INSENSITIVE_ORDER));
-            profilesTable.setItems(allProfiles);
-            profilesTable.refresh();
-            statusLabel.setText("Deleted profile: " + selected.getName());
-        } else {
-            statusLabel.setText("Deletion cancelled.");
-        }
-    }
-
-    //search page
-    @FXML
-    protected void searchProf(ActionEvent event) {
-        swapScene(event, "/cs151/application/search.fxml", 1000, 680, "Search Student Profiles");
-    }
-
-    @FXML
-    protected void goBackToHome(ActionEvent e) {
-        try {
-            Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
-            Scene scene = new Scene(
-                    FXMLLoader.load(getClass().getResource("/cs151/application/home.fxml")),
-                    340, 260
-            );
-            stage.setScene(scene);
-            stage.setTitle("KnowledgeTrack Home");
-            stage.show();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            statusLabel.setText("Error returning to home page.");
-        }
-    }
+    public void loadProfile(StudentProfile p) {
+        this.current = p;
 
 
+        lblName.setText(nvl(p.getName()));
+        tfAcademicStatus.setText(nvl(p.getAcademicStatus()));
+        cbEmployed.setSelected(p.isEmployed());
 
+        taJobDetails.setText(nvl(p.getJobDetails()));
+        tfPreferredRole.setText(nvl(p.getPreferredRole()));
 
-    private boolean requiredFields() {
-        String status = dropdown  != null && dropdown.getValue() != null ? dropdown.getValue().trim() : "";
-        String role   = dropDown  != null && dropDown.getValue() != null ? dropDown.getValue().trim() : "";
-        boolean employed = toggleButton != null && toggleButton.isSelected();
-        String job    = textField != null && textField.getText() != null ? textField.getText().trim() : "";
+        List<String> langs = (p.getLanguages() == null) ? List.of() : p.getLanguages();
+        lvProgrammingLanguages.setItems(FXCollections.observableArrayList(langs));
 
-        if (status.isEmpty()) return error("Academic Status is required.");
-        if (role.isEmpty())   return error("Preferred Professional Role is required.");
-        if (employed && job.isEmpty()) return error("Job details are required when Employed.");
-        return true;
-    }
-    private boolean error(String msg) {
-        new Alert(Alert.AlertType.ERROR, msg).showAndWait();
-        return false;
+        taComments.setText(nvl(p.getComments()));
+        cbWhitelist.setSelected(p.isWhiteList());
+        cbBlacklist.setSelected(p.isBlackList());
+
+        System.out.println("[Edit] Loaded: " + p.getName());
     }
 
     @FXML
     private void save() {
-        if (!requiredFields()) return;
-
-        var profiles = DataStore.getFullName();
-        StudentProfile target = null;
-        if (target == null && profiles.size() >= 5) {
-            error("Only 5 student profiles are allowed.");
+        if (current == null) {
+            new Alert(Alert.AlertType.ERROR, "No profile loaded.").showAndWait();
             return;
         }
-        final String status   = dropdown.getValue();
-        final boolean employed= toggleButton.isSelected();
-        final String job      = textField.getText().trim();
-        final String role     = dropDown.getValue();
 
-        target.setAcademicStatus(status);
-        target.setEmployeed(employed);
-        target.setJobDetails(job);
-        target.setPreferredRole(role);
+        current.setAcademicStatus(tfAcademicStatus.getText() == null ? "" : tfAcademicStatus.getText().trim());
+        current.setEmployeed(cbEmployed.isSelected());
+        current.setJobDetails(taJobDetails.getText() == null ? "" : taJobDetails.getText().trim());
+        current.setPreferredRole(tfPreferredRole.getText() == null ? "" : tfPreferredRole.getText().trim());
 
-        DataStore.saveProfiles();
+        current.setComments(taComments.getText() == null ? "" : taComments.getText().trim());
+        current.setWhiteList(cbWhitelist.isSelected());
+        current.setBlackList(cbBlacklist.isSelected());
+
+        DataStore.replaceByName(current);
+
+        new Alert(Alert.AlertType.INFORMATION, "Saved changes for: " + current.getName()).showAndWait();
+    }
+
+    @FXML
+    protected void searchProf(ActionEvent event) {
+        swapScene(event, "/cs151/application/search.fxml", 1000, 680, "Search Student Profiles");
     }
 
     private void swapScene(ActionEvent event, String fxml, int w, int h, String title) {
@@ -198,6 +99,9 @@ public class EditController {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Navigation error").showAndWait();
         }
     }
+
+    private static String nvl(String s) { return (s == null || s.isBlank()) ? "—" : s; }
 }

@@ -18,28 +18,18 @@ import java.util.stream.Collectors;
 
 public class SearchProfileController {
 
-    @FXML
-    private TextField searchField;
-    @FXML
-    private TableView<StudentProfile> profilesTable;
-    @FXML
-    private TableColumn<StudentProfile, String> nameCol;
-    @FXML
-    private TableColumn<StudentProfile, String> majorCol;
-    @FXML
-    private TableColumn<StudentProfile, String> statusCol;
-    @FXML
-    private TableColumn<StudentProfile, String> roleCol;
-    @FXML
-    private Label statusLabel;
+    @FXML private TextField searchField;
+    @FXML private TableView<StudentProfile> profilesTable;
+    @FXML private TableColumn<StudentProfile, String> nameCol;
+    @FXML private TableColumn<StudentProfile, String> majorCol;
+    @FXML private TableColumn<StudentProfile, String> statusCol;
+    @FXML private TableColumn<StudentProfile, String> roleCol;
+    @FXML private Label statusLabel;
 
 
-    @FXML
-    private ComboBox<String> dropdown, dropDown;
-    @FXML
-    private RadioButton toggleButton;
-    @FXML
-    private TextField textField;
+    @FXML private ComboBox<String> dropdown, dropDown;
+    @FXML private RadioButton toggleButton;
+    @FXML private TextField textField;
 
     private ObservableList<StudentProfile> allProfiles;
 
@@ -54,11 +44,11 @@ public class SearchProfileController {
         allProfiles.sort(Comparator.comparing(StudentProfile::getName, String.CASE_INSENSITIVE_ORDER));
         profilesTable.setItems(allProfiles);
 
-        //     if (allProfiles.isEmpty()) {
-        //          statusLabel.setText("No profiles found.");
-        //  }/* else {
-        // statusLabel.setText(allProfiles.size() + " profiles loaded.");
-        //     }*/
+        if (allProfiles.isEmpty()) {
+            statusLabel.setText("No profiles found.");
+        }/* else {
+            statusLabel.setText(allProfiles.size() + " profiles loaded.");
+        }*/
     }
 
     @FXML
@@ -224,7 +214,7 @@ public class SearchProfileController {
 
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Edit Profile: " + selected.getName());
-            stage.setScene(new Scene(root, 625, 550));
+            stage.setScene(new Scene(root, 1000, 680));
             stage.show();
         } catch (Exception ex) {
             ex.printStackTrace();
