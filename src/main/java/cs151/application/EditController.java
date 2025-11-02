@@ -29,6 +29,10 @@ public class EditController {
     @FXML private CheckBox cbWhitelist;
     @FXML private CheckBox cbBlacklist;
 
+    @FXML private ComboBox<String> academicStatusDropDown;
+    @FXML private ComboBox<String> preferredRoleDropDown;
+    @FXML private TextField jobDetailsField;
+
     private StudentProfile current;
 
     @FXML
@@ -38,6 +42,10 @@ public class EditController {
         if (lvCareerGoals != null)      lvCareerGoals.setItems(FXCollections.observableArrayList());
         if (lvProgrammingLanguages != null)
             lvProgrammingLanguages.setItems(FXCollections.observableArrayList());
+        if(academicStatusDropDown != null)
+            academicStatusDropDown.getItems().addAll("Freshman", "Sophomore", "Junior", "Senior", "Graduate");
+        if(preferredRoleDropDown != null)
+            preferredRoleDropDown.getItems().addAll("Front-End", "Back-End", "Full-Stack", "Data", "Other");
     }
 
     public void loadProfile(StudentProfile p) {
@@ -46,6 +54,9 @@ public class EditController {
         lblName.setText(nvl(p.getName()));
         lblAcademicStatus.setText(nvl(p.getAcademicStatus()));
         lblCurrentJob.setText(p.isEmployed() ? "Employed" : "Not Employed");
+        academicStatusDropDown.setValue(p.getAcademicStatus());
+        jobDetailsField.setText(p.getJobDetails());
+        preferredRoleDropDown.setValue(p.getPreferredRole());
 
         taJobDetails.setText(nvl(p.getJobDetails()));
 
@@ -65,7 +76,12 @@ public class EditController {
             new Alert(Alert.AlertType.ERROR, "No profile loaded.").showAndWait();
             return;
         }
-
+        if (academicStatusDropDown != null && academicStatusDropDown.getValue() != null)
+            current.setAcademicStatus(academicStatusDropDown.getValue());
+        if (jobDetailsField != null && jobDetailsField.getText() != null)
+            current.setJobDetails(jobDetailsField.getText().trim());
+        if (preferredRoleDropDown != null && preferredRoleDropDown.getValue() != null)
+            current.setPreferredRole(preferredRoleDropDown.getValue());
         current.setComments(taComments.getText() == null ? "" : taComments.getText().trim());
         current.setWhiteList(cbWhitelist.isSelected());
         current.setBlackList(cbBlacklist.isSelected());
