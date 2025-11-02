@@ -61,6 +61,9 @@ public final class DataStore {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        seedDefaultLanguagesIfAbsent();
+        seedDefaultProfilesIfAbsent();
+        loadProfiles();
     }
 
     public static void save() {
@@ -82,6 +85,29 @@ public final class DataStore {
             e.printStackTrace();
         }
     }
+    private static void seedDefaultProfilesIfAbsent() {
+        if (Files.exists(PROFILE_FILE)) return;
+        try {
+            if (!Files.exists(DATA_DIR)) Files.createDirectories(DATA_DIR);
+            try (BufferedWriter bw = Files.newBufferedWriter(PROFILE_FILE, StandardCharsets.UTF_8)) {
+                bw.write(String.join(",", "name","major","academicStatus","employment",
+                        "jobDetails","languages","preferredRole","comments","whiteList","blackList"));
+                bw.newLine();
+                bw.write("\"Hoang\",\"Software Engineering\",\"Junior\",\"Employed\",\"TA at SJSU\",\"Java|Python|SQL\",\"Backend\",\"Prefers APIs\",\"true\",\"false\"");
+                bw.newLine();
+                bw.write("\"Che\",\"Computer Science\",\"Senior\",\"Not Employed\",\"\",\"JavaScript|TypeScript|React\",\"Frontend\",\"Good with UX\",\"false\",\"false\"");
+                bw.newLine();
+                bw.write("\"Kanishka\",\"Data Science\",\"Sophomore\",\"Employed\",\"Data Intern\",\"Python|R|Pandas\",\"Data\",\"Loves ML\",\"false\",\"false\"");
+                bw.newLine();
+                bw.write("\"Ryhs\",\"Software Engineering\",\"Senior\",\"Employed\",\"QA Engineer\",\"Java|Spring|JUnit\",\"QA/DevOps\",\"Testing focus\",\"false\",\"false\"");
+                bw.newLine();
+                bw.write("\"Lyly\",\"Computer Engineering\",\"Junior\",\"Not Employed\",\"\",\"C++|Embedded C|Python\",\"Embedded\",\"Boards & sensors\",\"false\",\"false\"");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     private static String csv(String s) {
@@ -135,7 +161,6 @@ public final class DataStore {
         return out;
     }
 
-    // --- DataStore.java (add near other fields) ---
     public static boolean existsByExactName(String name) {
         if (name == null) return false;
         for (StudentProfile sp : NAME) {
@@ -197,7 +222,6 @@ public final class DataStore {
         }
     }
 
-    // --- DataStore.java (replace entire loadProfiles) ---
     public static void loadProfiles() {
         NAME.clear();
         if (!Files.exists(PROFILE_FILE)) return;

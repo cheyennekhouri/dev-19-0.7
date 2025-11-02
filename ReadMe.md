@@ -5,7 +5,7 @@
 # who did what:
 1. Sean Reece Calantoc: 
 2. Kanishka Yadav: 
-3. Hoang Khang Pham: 
+3. Hoang Khang Pham: Successfully fixed 5 profiles and Displayed values in Edit page
 4. Cheyenne Khouri: Fixed and adjusted search page, created edit page, created Edit Controller
 
 # Any other instruction that users need to know:
