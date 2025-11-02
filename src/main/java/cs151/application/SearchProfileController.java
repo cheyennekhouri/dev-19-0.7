@@ -221,5 +221,4 @@ public class SearchProfileController {
             new Alert(Alert.AlertType.ERROR, "Failed to open edit page.").showAndWait();
         }
     }
-
 }
