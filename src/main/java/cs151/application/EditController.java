@@ -29,21 +29,16 @@ public class EditController {
 
     @FXML
     public void initialize() {
-        // Populate Academic Status dropdown
         if (cbAcademicStatus != null) {
             cbAcademicStatus.setItems(FXCollections.observableArrayList(
                     "Freshman", "Sophomore", "Junior", "Senior", "Graduate"
             ));
         }
-
-        // Populate Preferred Role dropdown
         if (cbPreferredRole != null) {
             cbPreferredRole.setItems(FXCollections.observableArrayList(
                     "Front-End", "Back-End", "Full-Stack", "Data", "Other"
             ));
         }
-
-        // Populate Programming Languages from DataStore
         if (lvProgrammingLanguages != null) {
             List<String> langs = DataStore.getList().stream()
                     .map(ProgrammingLanguages::getProgrammingLanguage)
@@ -52,7 +47,6 @@ public class EditController {
             lvProgrammingLanguages.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         }
 
-        // Setup whitelist/blacklist mutual exclusivity
         if (cbWhitelist != null && cbBlacklist != null) {
             cbWhitelist.setOnAction(e -> {
                 if (cbWhitelist.isSelected()) cbBlacklist.setSelected(false);
@@ -69,11 +63,17 @@ public class EditController {
         // Load read-only fields
         lblName.setText(nvl(p.getName()));
 
-        // Load editable fields
-        cbAcademicStatus.setValue(p.getAcademicStatus());
+        // Load editable fields with a safe check!
+        if (cbAcademicStatus != null) {
+            cbAcademicStatus.setValue(p.getAcademicStatus());
+        }
+
         rbEmployed.setSelected(p.isEmployed());
         tfJobDetails.setText(nvl(p.getJobDetails()));
-        cbPreferredRole.setValue(p.getPreferredRole());
+
+        if (cbPreferredRole != null) {
+            cbPreferredRole.setValue(p.getPreferredRole());
+        }
 
         // Select the student's programming languages
         if (p.getLanguages() != null) {
